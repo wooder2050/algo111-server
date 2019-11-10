@@ -8,7 +8,10 @@ const userSchema = new mongoose.Schema({
     type: String
   },
   level: {
-    type: Number
+    type: String
+  },
+  stage: {
+    type: String
   },
   point: {
     type: Number

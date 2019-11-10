@@ -8,7 +8,6 @@ router.get("/", function(req, res, next) {
   res.send("respond with a resource");
 });
 
-
 router.post("/", async function(req, res, next) {
   var user_info;
   var user = await User.find({
@@ -18,7 +17,8 @@ router.post("/", async function(req, res, next) {
     user_info = await User.create({
       name: req.body.user_info.name,
       picture: req.body.user_info.picture,
-      level: 0,
+      level: "1",
+      stage: "1",
       point: 0
     });
     return res.status(200).json({

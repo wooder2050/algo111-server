@@ -4,9 +4,10 @@ const User = require("../models/user");
 const Problem = require("../models/problem");
 const vm = require("vm");
 
-router.get("/:level", async function(req, res) {
+router.get("/:level/:stage", async function(req, res) {
   const problem = await Problem.find({
-    level: req.params.level
+    level: req.params.level,
+    stage: req.params.stage
   });
   return res.status(200).json({
     problem: problem[0]
@@ -54,7 +55,7 @@ router.post("/check", async function(req, res) {
     //   for (var i = 0; i < n.length; i++) {
     //     if (n[i] !== m[i]) {
     //       //인덱스 0부터 순차적으로 두 배열 비교
-    //       return n[i];
+    //       return n[i] + 1;
     //       //비완주자가 참가자 배열에 나올 경우 출력
     //     }
     //   }
@@ -104,23 +105,16 @@ router.post("/score", async function(req, res) {
     result.push(test);
   }
   if (checkAnswer === problem[0].tests.length) {
-    //   function solution(n,m) {
-    //     n.sort(); //참가자 배열 정렬
-    //  m.sort(); //완주자 배열 정렬
-    //  for(var i=0;i<n.length;i++){
-    //      if(n[i] !== m[i]){
-    //          //인덱스 0부터 순차적으로 두 배열 비교
-    //          return n[i];
-    //          //비완주자가 참가자 배열에 나올 경우 출력
-    //      }
-    //  }
-    //    }
     return res.status(200).json({
-      result: result
+      result: result,
+      finalCode: req.body.code,
+      time: req.body.time
     });
   } else {
     return res.status(401).json({
-      result: result
+      result: result,
+      finalCode: req.body.code,
+      time: req.body.time
     });
   }
 });
