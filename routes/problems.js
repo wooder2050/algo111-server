@@ -4,6 +4,40 @@ const User = require("../models/user");
 const Problem = require("../models/problem");
 const vm = require("vm");
 
+router.get("/", async function(req, res) {
+  var levelInfo = [];
+  for (var i = 0; i < 10; i++) {
+    levelInfo[i] = [];
+    for (var j = 0; j < 5; j++) {
+      levelInfo[i].push(0);
+    }
+  }
+  var problem = await Problem.find({});
+  var user = await User.find({});
+  for (var i = 0; i < user.length; i++) {
+    levelInfo[user[i].level - 1][user[i].stage - 1]++;
+  }
+  var popularProblemNumber = 0;
+  var popularProblem = [1, 1];
+  for (var i = 0; i < 10; i++) {
+    for (var j = 0; j < 5; j++) {
+      if (popularProblemNumber < levelInfo[i][j]) {
+        popularProblemNumber = levelInfo[i][j];
+        popularProblem = [i + 1, j + 1];
+      }
+    }
+  }
+  var newpopularProblem = await Problem.find({
+    level: popularProblem[0],
+    stage: popularProblem[1]
+  });
+  return res.status(200).json({
+    problem: problem,
+    popularProblem: newpopularProblem,
+    popularProblemNumber: popularProblemNumber
+  });
+});
+
 router.get("/:level/:stage", async function(req, res) {
   const problem = await Problem.find({
     level: req.params.level,
@@ -72,6 +106,9 @@ router.post("/check", async function(req, res) {
 });
 
 router.post("/score", async function(req, res) {
+  const user = await User.find({
+    name: req.body.userName
+  });
   const problem = await Problem.find({
     level: req.body.level,
     stage: req.body.stage
@@ -107,15 +144,22 @@ router.post("/score", async function(req, res) {
     result.push(test);
   }
   if (checkAnswer === problem[0].tests.length) {
-    const user = await User.find({
-      name: req.body.userName
-    });
+    var newArray = problem[0].successPeople;
+    newArray.push(user[0]._id);
+    await Problem.update(
+      {
+        level: req.body.level,
+        stage: req.body.stage
+      },
+      {
+        successPeople: newArray
+      }
+    );
     var newStage = Number(req.body.stage) + 1;
     const nextProblem = await Problem.find({
       level: req.body.level,
       stage: newStage + ""
     });
-    console.log("여기", user);
     if (nextProblem.length === 0) {
       var newLevel = Number(req.body.level) + 1;
       await User.update(
@@ -124,7 +168,8 @@ router.post("/score", async function(req, res) {
         },
         {
           level: newLevel + "",
-          stage: "1"
+          stage: "1",
+          point: user[0].point + 1
         }
       );
     } else {
@@ -133,11 +178,11 @@ router.post("/score", async function(req, res) {
           name: req.body.userName
         },
         {
-          stage: newStage + ""
+          stage: newStage + "",
+          point: user[0].point + 1
         }
       );
     }
-    console.log("저기", user);
     return res.status(200).json({
       result: result,
       finalCode: req.body.code,

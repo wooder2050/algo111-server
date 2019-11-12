@@ -15,6 +15,15 @@ const userSchema = new mongoose.Schema({
   },
   point: {
     type: Number
+  },
+  todayAuthority: {
+    type: Boolean
+  },
+  lastDate: {
+    type: Number
+  },
+  lastMonth: {
+    type: Number
   }
 });
 

@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const ObjectId = require("mongoose").Types.ObjectId;
 
 const problemSchema = new mongoose.Schema({
   title: {
@@ -8,6 +9,9 @@ const problemSchema = new mongoose.Schema({
     type: String
   },
   level: {
+    type: String
+  },
+  stage: {
     type: String
   },
   description: {
@@ -30,10 +34,18 @@ const problemSchema = new mongoose.Schema({
   },
   tests: [
     {
-      code : String,
-      solution : String
+      code: String,
+      solution: String
     }
-  ]
+  ],
+  notice: {
+    type: String
+  },
+  successPeople: [{ type: ObjectId, ref: "User" }],
+  kinds: {
+    type: String
+  },
+  tryingPeople: [{ type: ObjectId, ref: "User" }]
 });
 
 module.exports = mongoose.model("Problem", problemSchema);
