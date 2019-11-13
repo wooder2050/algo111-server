@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 const User = require("../models/user");
 const Problem = require("../models/problem");
+const Code = require("../models/code");
 const vm = require("vm");
 
 router.get("/", async function(req, res) {
@@ -12,7 +13,7 @@ router.get("/", async function(req, res) {
       levelInfo[i].push(0);
     }
   }
-  var problem = await Problem.find({});
+  var problem = await Problem.find({}).sort({ level: "asc", stage: "asc" });
   var user = await User.find({});
   for (var i = 0; i < user.length; i++) {
     levelInfo[user[i].level - 1][user[i].stage - 1]++;
@@ -53,6 +54,7 @@ router.post("/check", async function(req, res) {
     level: req.body.level,
     stage: req.body.stage
   });
+  console.log("안녕", problem[0]);
   var checkAnswer = 0;
   var result = [];
   for (var i = 0; i < 2; i++) {
@@ -159,6 +161,15 @@ router.post("/score", async function(req, res) {
     const nextProblem = await Problem.find({
       level: req.body.level,
       stage: newStage + ""
+    });
+    console.log("sssss", problem[0].title);
+    const myCode = await Code.create({
+      level: req.body.level,
+      stage: req.body.stage,
+      userName: user[0].name,
+      user_id: user[0]._id,
+      code: req.body.code,
+      title: problem[0].title
     });
     if (nextProblem.length === 0) {
       var newLevel = Number(req.body.level) + 1;
