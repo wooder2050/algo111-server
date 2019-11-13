@@ -40,7 +40,7 @@ router.post("/", async function(req, res) {
   });
   var codeAll = await Code.find({});
   var levelAll = await Level.find({}).sort({ level: "asc" });
-  var userAll = await User.find({}).sort({ point: "desc" });
+  var userAll = await User.find({}).sort({ point: "desc" }).limit(10);
   var today = new Date();
   var todayDate = today.getDate();
   var todayMonth = today.getMonth();

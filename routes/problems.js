@@ -13,7 +13,8 @@ router.get("/", async function(req, res) {
       levelInfo[i].push(0);
     }
   }
-  var problem = await Problem.find({}).sort({ level: "asc", stage: "asc" });
+  var problem = await Problem.find({}).sort({ problemNumber: "asc" });
+
   var user = await User.find({});
   for (var i = 0; i < user.length; i++) {
     levelInfo[user[i].level - 1][user[i].stage - 1]++;
@@ -54,7 +55,6 @@ router.post("/check", async function(req, res) {
     level: req.body.level,
     stage: req.body.stage
   });
-  console.log("안녕", problem[0]);
   var checkAnswer = 0;
   var result = [];
   for (var i = 0; i < 2; i++) {
@@ -86,17 +86,6 @@ router.post("/check", async function(req, res) {
     result.push(test);
   }
   if (checkAnswer === 2) {
-    function solution(n, m) {
-      n.sort(); //참가자 배열 정렬
-      m.sort(); //완주자 배열 정렬
-      for (var i = 0; i < n.length; i++) {
-        if (n[i] !== m[i]) {
-          //인덱스 0부터 순차적으로 두 배열 비교
-          return n[i];
-          //비완주자가 참가자 배열에 나올 경우 출력
-        }
-      }
-    }
     return res.status(200).json({
       result: result
     });
@@ -162,7 +151,6 @@ router.post("/score", async function(req, res) {
       level: req.body.level,
       stage: newStage + ""
     });
-    console.log("sssss", problem[0].title);
     const myCode = await Code.create({
       level: req.body.level,
       stage: req.body.stage,
