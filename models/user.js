@@ -24,6 +24,9 @@ const userSchema = new mongoose.Schema({
   },
   lastMonth: {
     type: Number
+  },
+  problemChance: {
+    type: Number
   }
 });
 

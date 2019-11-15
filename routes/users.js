@@ -7,8 +7,36 @@ const Code = require("../models/code");
 
 /* GET users listing. */
 router.get("/", function(req, res, next) {
-  console.log(res.body);
   res.send("respond with a resource");
+});
+
+router.post("/chance", async function(req, res, next) {
+  if (req.body.chance > 0) {
+    await User.update(
+      {
+        name: req.body.name
+      },
+      {
+        problemChance: req.body.chance - 1
+      }
+    );
+  } else if (req.body.chance === 0) {
+    await User.update(
+      {
+        name: req.body.name
+      },
+      {
+        todayAuthority: false,
+        problemChance: req.body.chance
+      }
+    );
+  }
+  var user = await User.find({
+    name: req.body.name
+  });
+  return res.status(200).json({
+    userInfo: user[0]
+  });
 });
 
 router.post("/date", async function(req, res) {
@@ -40,7 +68,9 @@ router.post("/", async function(req, res) {
   });
   var codeAll = await Code.find({});
   var levelAll = await Level.find({}).sort({ level: "asc" });
-  var userAll = await User.find({}).sort({ point: "desc" }).limit(10);
+  var userAll = await User.find({})
+    .sort({ point: "desc" })
+    .limit(10);
   var today = new Date();
   var todayDate = today.getDate();
   var todayMonth = today.getMonth();
@@ -53,14 +83,14 @@ router.post("/", async function(req, res) {
       point: 0,
       todayAuthority: true,
       lastMonth: todayMonth,
-      lastDate: todayDate
+      lastDate: todayDate,
+      problemChance: 5
     });
     return res.status(200).json({
       userInfo: user_info,
       userAll: userAll,
       levelAll: levelAll,
-      codeAll: codeAll,
-      problemChance : 5
+      codeAll: codeAll
     });
   } else {
     if (user[0].lastDate === todayDate && user[0].lastMonth === todayMonth) {
@@ -68,8 +98,7 @@ router.post("/", async function(req, res) {
         userInfo: user[0],
         userAll: userAll,
         levelAll: levelAll,
-        codeAll: codeAll,
-        problemChance : 5
+        codeAll: codeAll
       });
     } else {
       await User.update(
@@ -79,7 +108,8 @@ router.post("/", async function(req, res) {
         {
           todayAuthority: true,
           lastMonth: todayMonth,
-          lastDate: todayDate
+          lastDate: todayDate,
+          problemChance: 5
         }
       );
       var newUser = await User.find({
@@ -89,8 +119,7 @@ router.post("/", async function(req, res) {
         userInfo: newUser[0],
         userAll: userAll,
         levelAll: levelAll,
-        codeAll: codeAll,
-        problemChance : 5
+        codeAll: codeAll
       });
     }
   }
