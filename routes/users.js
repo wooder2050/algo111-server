@@ -59,7 +59,8 @@ router.post("/", async function(req, res) {
       userInfo: user_info,
       userAll: userAll,
       levelAll: levelAll,
-      codeAll: codeAll
+      codeAll: codeAll,
+      problemChance : 5
     });
   } else {
     if (user[0].lastDate === todayDate && user[0].lastMonth === todayMonth) {
@@ -67,7 +68,8 @@ router.post("/", async function(req, res) {
         userInfo: user[0],
         userAll: userAll,
         levelAll: levelAll,
-        codeAll: codeAll
+        codeAll: codeAll,
+        problemChance : 5
       });
     } else {
       await User.update(
@@ -87,7 +89,8 @@ router.post("/", async function(req, res) {
         userInfo: newUser[0],
         userAll: userAll,
         levelAll: levelAll,
-        codeAll: codeAll
+        codeAll: codeAll,
+        problemChance : 5
       });
     }
   }
