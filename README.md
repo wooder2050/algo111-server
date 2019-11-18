@@ -5,6 +5,10 @@
 
 ALGO111는 '하루 한 시간 한 문제' 알고리즘 문제를 푸는 웹 어플리케이션입니다.
 
+<https://www.algo111.online/>
+
+![](https://algo111.s3.ap-northeast-2.amazonaws.com/readme.gif)
+
 ## Content
 
 * Installation
@@ -90,7 +94,7 @@ npm start
 
 * Jest, Enzyme 를 이용해 Component Unit Test를 하고 Cypress.io를 활용해 E2E test를 진행했습니다. test를 작성하면서 구현 단계에서 발견하지 못했던 많은 에러를 찾게 되었고 수정했습니다. test를 작성한 후에도 추가적인 기능을 구현하였는데 테스트 덕분에 예측하지 못했던 에러를 바로 찾을 수 있어서 좋았지만 추가적인 기능 구현을 할 때 더 많은 사항을 고려하게 되었습니다. 이번 프로젝트를 초반부터 테스트 기반의 개발을 하지 못해서 많은 아쉬움이 남았습니다. 다음 프로젝트에는 초기 단계부터 테스트를 작성해 테스트 기반의 개발을 할 것입니다.
 
-* Client는 Netlify를 통해 배포를 하고 Server는 AWS Elastic beanstalk와 CircleCI를 통해서 배포하였습니다. 배포할 때 http와 https에 대한 이해 부족으로 인해 많은 어려움을 겪었습니다. 도메인을 구해서 Client 주소를 https로 변경하였고 서버 또한 도메인을 구매한 서비스에서 "api."를 추가한 url를 설정하여 배포에 성공하였습니다. http와 aws 배포에 대한 이해를 더 높이고 싶습니다.
+* Client는 Netlify를 통해 배포를 하고 Server는 AWS Elastic beanstalk와 CircleCI를 통해서 배포하였습니다. 배포할 때 http와 https에 대한 이해 부족으로 인해 많은 어려움을 겪었습니다. 도메인을 구해서 Client 주소를 https로 변경하였고 서버 또한 도메인을 구매한 서비스에서 "api."를 추가한 url를 설정하여 배포에 성공하였습니다. http와 aws 배포 환경에 대한 이해를 더 높이고 싶습니다.
 
 
 ## Things To Do
