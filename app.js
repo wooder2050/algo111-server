@@ -11,7 +11,7 @@ var app = express();
 connect();
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "https://www.algo111.online",
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true
   })
