@@ -39,6 +39,17 @@ router.post("/chance", async function(req, res, next) {
   });
 });
 
+router.post("/reload", async function(req, res) {
+  var user_info;
+  var user = await User.find({
+    name: req.body.name
+  });
+  return res.status(200).json({
+    userInfo: user[0]
+  });
+});
+
+
 router.post("/date", async function(req, res) {
   var today = new Date();
   var todayDate = today.getDate();
