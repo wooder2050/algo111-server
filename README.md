@@ -11,6 +11,7 @@ ALGO111는 '하루 한 시간 한 문제' 알고리즘 문제를 푸는 웹 어�
 
 ## Content
 
+* Requirements
 * Installation
 * Features
 * Skills
@@ -18,6 +19,11 @@ ALGO111는 '하루 한 시간 한 문제' 알고리즘 문제를 푸는 웹 어�
 * Deployment & Continuous Integration
 * Project management
 * Things To Do
+
+## Requirements
+* 1024px 이상의 큰 브라우저 환경에서 실행해야 합니다.
+* 구글 계정이 필요한 서비스입니다.
+* 브라우저는 최신 버전 크롭을 사용해야 합니다.
 
 ## Installation
 
