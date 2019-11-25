@@ -43,6 +43,14 @@ npm install
 npm start
 </pre>
 
+### Set server environment
+
+<pre>
+.env 파일 생성
+DATABASE_URI = "Input your MongoDB databse uri"
+CLIENT_ADDRESS = "Input your client address"
+</pre>
+
 ## Features
 
 * auth0를 이용한 소셜 로그인 구현(구글)
@@ -108,3 +116,5 @@ npm start
 * 한 문제에 제출한 코드 히스토리 만들기 - 코드가 저장된 database schema를 변경해서 배열을 이용해 Queue 자료구조로 코드 히스토리를 만들 예정입니다.
 * 문제 해결한 유저끼리 정답을 공유하는 기능 - 문제를 해결한 유저들만 접근이 가능한 페이지를 만들어 다음 유저들의 코드를 볼 수 있도록 할 것입니다. 
 
+## Sincere Thanks
+[ken](https://github.com/Ken123777) / Vanilla Coding
